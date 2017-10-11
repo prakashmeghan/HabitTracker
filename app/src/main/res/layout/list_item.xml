@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingEnd="@dimen/activity_margin"
+    android:paddingLeft="@dimen/activity_margin"
+    android:paddingRight="@dimen/activity_margin"
+    android:paddingStart="@dimen/activity_margin"
+    android:paddingTop="@dimen/activity_margin"
+    android:paddingBottom="@dimen/activity_margin">
+
+    <TextView
+        android:id="@+id/tv_person_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="16sp"
+        tools:text="0"
+        android:layout_weight=".5"
+        />
+
+    <TextView
+        android:id="@+id/tv_person_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="16sp"
+        tools:text="@string/hint_person_name"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:id="@+id/tv_person_habit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="2"
+        android:textSize="16sp"
+        tools:text="@string/hint_person_habit"
+        android:layout_weight="1.5"
+        />
+
+    <TextView
+        android:id="@+id/tv_gender"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="1"
+        android:textSize="16sp"
+        tools:text="@string/gender"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:id="@+id/tv_freq"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="1"
+        android:textSize="16sp"
+        tools:text="@string/frequency"
+        android:layout_weight="1"
+        />
+
+</LinearLayout>
