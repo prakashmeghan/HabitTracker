@@ -60,8 +60,8 @@ public class HabitTrackerDbHelper extends SQLiteOpenHelper {
         // The database is still at version 1, so there's nothing to do be done here.
     }
 
-    public Habit getHabit(int habitId) {
-        Habit habit = null;
+    public Cursor queryHabit(int habitId){
+        Cursor cursor = null;
         SQLiteDatabase db = getReadableDatabase();
         String[] projection = {
                 HabitEntry._ID,
@@ -71,7 +71,7 @@ public class HabitTrackerDbHelper extends SQLiteOpenHelper {
                 HabitEntry.COLUMN_HABIT_FREQUENCY};
 
         // Perform a query on the habits table
-        Cursor cursor = db.query(
+        cursor = db.query(
                 HabitEntry.TABLE_NAME,   // The table to query
                 projection,            // The columns to return
                 HabitEntry._ID + "=?",                  // The columns for the WHERE clause
@@ -79,6 +79,14 @@ public class HabitTrackerDbHelper extends SQLiteOpenHelper {
                 null,                  // Don't group the rows
                 null,                  // Don't filter by row groups
                 null);                   // The sort order
+
+        return cursor;
+    }
+
+    public Habit getHabit(int habitId) {
+        Habit habit = null;
+
+        Cursor cursor = queryHabit(habitId);
 
         try {
             int idColumnIndex = cursor.getColumnIndex(HabitEntry._ID);
