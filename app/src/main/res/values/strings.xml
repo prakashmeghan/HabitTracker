@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Habit Tracker</string>
+
+    <!-- Label for overflow menu option that inserts fake habit data into the app [CHAR LIMIT=20] -->
+    <string name="action_insert_dummy_data">Insert Dummy Data</string>
+
+    <!-- Label for overflow menu option that deletes all habit data in the app [CHAR LIMIT=20] -->
+    <string name="action_delete_all_entries">Delete All Pets</string>
+
+    <!-- Title for the activity to add a new habit [CHAR LIMIT=20] -->
+    <string name="editor_activity_title_new_habit">Add a habit</string>
+
+    <!-- Label for editor menu option to save habit and leave editor [CHAR LIMIT=20] -->
+    <string name="action_save">Save</string>
+
+    <!-- Label for editor overflow menu option that deletes the current habit [CHAR LIMIT=20] -->
+    <string name="action_delete">Delete</string>
+
+    <!-- Label for overview category of attributes in the editor [CHAR LIMIT=30] -->
+    <string name="category_overview">Overview</string>
+
+    <!-- Label for gender information in the editor [CHAR LIMIT=30] -->
+    <string name="category_gender">Gender</string>
+
+    <!-- Label for frequency(number of times person perform habit in a day) information in the editor [CHAR LIMIT=30] -->
+    <string name="category_frequency">Frequency</string>
+
+    <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_person_name">Name</string>
+
+    <!-- Text hint for habit field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_person_habit">Habit</string>
+
+    <!-- Text hint for frequency(number of times person perform habit in a day) field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_frequency">Number of times</string>
+
+    <!-- Label for dropdown menu option if the person's gender is unknown [CHAR LIMIT=20] -->
+    <string name="gender_unknown">Unknown</string>
+
+    <!-- Label for dropdown menu option if the person is male [CHAR LIMIT=20] -->
+    <string name="gender_male">Male</string>
+
+    <!-- Label for dropdown menu option if the person is female [CHAR LIMIT=20] -->
+    <string name="gender_female">Female</string>
+</resources>
