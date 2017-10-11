@@ -5,7 +5,7 @@
     <string name="action_insert_dummy_data">Insert Dummy Data</string>
 
     <!-- Label for overflow menu option that deletes all habit data in the app [CHAR LIMIT=20] -->
-    <string name="action_delete_all_entries">Delete All Pets</string>
+    <string name="action_delete_all_entries">Delete All Habits</string>
 
     <!-- Title for the activity to add a new habit [CHAR LIMIT=20] -->
     <string name="editor_activity_title_new_habit">Add a habit</string>
@@ -42,4 +42,9 @@
 
     <!-- Label for dropdown menu option if the person is female [CHAR LIMIT=20] -->
     <string name="gender_female">Female</string>
+
+    <string name="id">Id</string>
+    <string name="gender">Gender</string>
+    <string name="frequency">Frequency</string>
+    <string name="no_habit">No habit data found.</string>
 </resources>

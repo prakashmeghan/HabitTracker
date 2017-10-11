@@ -32,22 +32,32 @@ import android.widget.Toast;
 
 import com.conceptappsworld.habittracker.data.HabitTrackerContract.HabitEntry;
 import com.conceptappsworld.habittracker.data.HabitTrackerDbHelper;
+import com.conceptappsworld.habittracker.model.Habit;
+import com.conceptappsworld.habittracker.util.ConstantUtil;
 
 /**
  * Allows user to create a new habit or edit an existing one.
  */
 public class EditorActivity extends AppCompatActivity {
 
-    /** EditText field to enter the person's name */
+    /**
+     * EditText field to enter the person's name
+     */
     private EditText mNameEditText;
 
-    /** EditText field to enter the person's habit */
+    /**
+     * EditText field to enter the person's habit
+     */
     private EditText mHabitEditText;
 
-    /** EditText field to enter the habit's frequency */
+    /**
+     * EditText field to enter the habit's frequency
+     */
     private EditText mFreqEditText;
 
-    /** EditText field to enter the person's gender */
+    /**
+     * EditText field to enter the person's gender
+     */
     private Spinner mGenderSpinner;
 
     /**
@@ -57,10 +67,24 @@ public class EditorActivity extends AppCompatActivity {
      */
     private int mGender = HabitEntry.GENDER_UNKNOWN;
 
+    private int habitId;
+
+    HabitTrackerDbHelper mDbHelper;
+    SQLiteDatabase db;
+    int selectedGender;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+
+        // Create database helper
+        mDbHelper = new HabitTrackerDbHelper(this);
+
+        // Gets the database in write mode
+        db = mDbHelper.getWritableDatabase();
+
+        getValueFromIntent();
 
         // Find all relevant views that we will need to read user input from
         mNameEditText = (EditText) findViewById(R.id.edit_person_name);
@@ -68,7 +92,20 @@ public class EditorActivity extends AppCompatActivity {
         mFreqEditText = (EditText) findViewById(R.id.edit_habit_freq);
         mGenderSpinner = (Spinner) findViewById(R.id.spinner_gender);
 
+        if (habitId != 0) {
+            Habit habit = mDbHelper.getHabit(habitId);
+            if (habit != null) {
+                mNameEditText.setText(habit.getPersonName());
+                mHabitEditText.setText(habit.getHabitName());
+                mFreqEditText.setText(String.valueOf(habit.getHabitFrequency()));
+                selectedGender = habit.getPersonGender();
+            }
+        }
         setupSpinner();
+    }
+
+    private void getValueFromIntent() {
+        habitId = getIntent().getIntExtra(ConstantUtil.INTENT_EXTRA_HABIT_ID, 0);
     }
 
     /**
@@ -85,6 +122,10 @@ public class EditorActivity extends AppCompatActivity {
 
         // Apply the adapter to the spinner
         mGenderSpinner.setAdapter(genderSpinnerAdapter);
+
+        if (habitId != 0) {
+            mGenderSpinner.setSelection(selectedGender);
+        }
 
         // Set the integer mSelected to the constant values
         mGenderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -121,11 +162,6 @@ public class EditorActivity extends AppCompatActivity {
         String freqString = mFreqEditText.getText().toString().trim();
         int freq = Integer.parseInt(freqString);
 
-        // Create database helper
-        HabitTrackerDbHelper mDbHelper = new HabitTrackerDbHelper(this);
-
-        // Gets the database in write mode
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         // Create a ContentValues object where column names are the keys,
         // and person attributes from the editor are the values.
@@ -148,6 +184,40 @@ public class EditorActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Get user input from editor and update existing habit into database.
+     */
+    private void updateHabit(int habitId) {
+        // Read from input fields
+        // Use trim to eliminate leading or trailing white space
+        String nameString = mNameEditText.getText().toString().trim();
+        String habitString = mHabitEditText.getText().toString().trim();
+        String freqString = mFreqEditText.getText().toString().trim();
+        int freq = Integer.parseInt(freqString);
+
+
+        // Create a ContentValues object where column names are the keys,
+        // and person attributes from the editor are the values.
+        ContentValues values = new ContentValues();
+        values.put(HabitEntry.COLUMN_PERSON_NAME, nameString);
+        values.put(HabitEntry.COLUMN_PERSON_HABIT, habitString);
+        values.put(HabitEntry.COLUMN_PERSON_GENDER, mGender);
+        values.put(HabitEntry.COLUMN_HABIT_FREQUENCY, freq);
+
+        // update a existing row for habit in the database.
+        int rowId = db.update(HabitEntry.TABLE_NAME, values, HabitEntry._ID + "=?",
+                new String[]{String.valueOf(habitId)});
+
+        // Show a toast message depending on whether or not the insertion was successful
+        if (rowId == 0) {
+            // If the row ID is -1, then there was an error with insertion.
+            Toast.makeText(this, "Error with updating habit", Toast.LENGTH_SHORT).show();
+        } else {
+            // Otherwise, the insertion was successful and we can display a toast with the row ID.
+            Toast.makeText(this, "Habit updated with row id: " + rowId, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu options from the res/menu/menu_editor.xml file.
@@ -163,13 +233,22 @@ public class EditorActivity extends AppCompatActivity {
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
                 // Save habit to database
-                insertHabit();
+                if (habitId != 0) {
+                    updateHabit(habitId);
+                } else {
+                    insertHabit();
+                }
+
                 // Exit activity
                 finish();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
-                // Do nothing for now
+                if (habitId != 0) {
+                    deleteHabit(habitId);
+                } else {
+                    Toast.makeText(this, "No habit found to delete for now.", Toast.LENGTH_SHORT).show();
+                }
                 return true;
             // Respond to a click on the "Up" arrow button in the app bar
             case android.R.id.home:
@@ -178,5 +257,15 @@ public class EditorActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteHabit(int habitId) {
+        if (mDbHelper.deleteHabit(habitId)) {
+            Toast.makeText(this, "Habit deleted successfully.", Toast.LENGTH_SHORT).show();
+            // Exit activity
+            finish();
+        } else {
+            Toast.makeText(this, "Habit couldn't deleted.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

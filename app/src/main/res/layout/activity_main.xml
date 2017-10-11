@@ -7,10 +7,99 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/text_view_habit"
+        android:id="@+id/tv_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_margin"/>
+        android:padding="@dimen/activity_margin"
+        android:visibility="gone"
+        android:text="@string/no_habit"
+        android:layout_alignParentTop="true"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_heading"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/activity_margin"
+        android:paddingLeft="@dimen/activity_margin"
+        android:paddingRight="@dimen/activity_margin"
+        android:paddingStart="@dimen/activity_margin"
+        android:background="@color/colorAccent"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_h_person_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="16sp"
+            tools:text="@string/id"
+            android:layout_weight=".5"
+            android:textColor="@android:color/white"
+            />
+
+        <TextView
+            android:id="@+id/tv_h_person_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="16sp"
+            tools:text="@string/hint_person_name"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            />
+
+        <TextView
+            android:id="@+id/tv_h_person_habit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="2"
+            android:textSize="16sp"
+            tools:text="@string/hint_person_habit"
+            android:layout_weight="1.5"
+            android:textColor="@android:color/white"
+            />
+
+        <TextView
+            android:id="@+id/tv_h_gender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="1"
+            android:textSize="16sp"
+            tools:text="@string/gender"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            />
+
+        <TextView
+            android:id="@+id/tv_h_freq"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="1"
+            android:textSize="16sp"
+            tools:text="@string/frequency"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_habits"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/ll_heading"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

@@ -8,7 +8,8 @@ import android.provider.BaseColumns;
 public final class HabitTrackerContract {
     // To prevent someone from accidentally instantiating the contract class,
     // give it an empty constructor.
-    private HabitTrackerContract() {}
+    private HabitTrackerContract() {
+    }
 
 
     /**
@@ -17,43 +18,45 @@ public final class HabitTrackerContract {
      */
     public static final class HabitEntry implements BaseColumns {
 
-        /** Name of database table for habits */
+        /**
+         * Name of database table for habits
+         */
         public final static String TABLE_NAME = "habits";
 
         /**
          * Unique ID number for the Habit (only for use in the database table).
-         *
+         * <p>
          * Type: INTEGER
          */
         public final static String _ID = BaseColumns._ID;
 
         /**
          * Name of the Person.
-         *
+         * <p>
          * Type: TEXT
          */
-        public final static String COLUMN_PERSON_NAME ="person_name";
+        public final static String COLUMN_PERSON_NAME = "person_name";
 
         /**
          * Habit of the person.
-         *
+         * <p>
          * Type: TEXT
          */
         public final static String COLUMN_PERSON_HABIT = "person_habit";
 
         /**
          * Gender of the person.
-         *
+         * <p>
          * The only possible values are {@link #GENDER_UNKNOWN}, {@link #GENDER_MALE},
          * or {@link #GENDER_FEMALE}.
-         *
+         * <p>
          * Type: INTEGER
          */
         public final static String COLUMN_PERSON_GENDER = "gender";
 
         /**
          * Number of times habit do.
-         *
+         * <p>
          * Type: INTEGER
          */
         public final static String COLUMN_HABIT_FREQUENCY = "frequency";
